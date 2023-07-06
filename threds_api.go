@@ -24,7 +24,6 @@ func UserIDFromUsername(username string) (string, error) {
 		return "", fmt.Errorf("İstek oluşturulurken bir hata oluştu: %v", err)
 	}
 
-	// Headers
 	request.Header.Set("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	request.Header.Set("accept-language", "ko,en;q=0.9,ko-KR;q=0.8,ja;q=0.7")
 	request.Header.Set("pragma", "no-cache")
@@ -34,13 +33,13 @@ func UserIDFromUsername(username string) (string, error) {
 	request.Header.Set("sec-fetch-site", "cross-site")
 	request.Header.Set("sec-fetch-user", "?1")
 	request.Header.Set("upgrade-insecure-requests", "1")
-	// İsteğin diğer headerları için gerektiğinde bu örneği genişletebilirsiniz
 
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
 		return "", fmt.Errorf("İstek gönderilirken bir hata oluştu: %v", err)
 	}
+
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
@@ -50,9 +49,7 @@ func UserIDFromUsername(username string) (string, error) {
 
 	text := string(body)
 
-	// remove ALL whitespaces from text
 	text = strings.ReplaceAll(text, " ", "")
-	// remove all newlines from text
 	text = strings.ReplaceAll(text, "\n", "")
 
 	regex := regexp.MustCompile(`"props":{"user_id":"(\d+)"},`)
@@ -109,6 +106,7 @@ func UserProfile(username, userId string) (UserProfileData, error) {
 	if err != nil {
 		return userProfile, err
 	}
+
 	defer response.Body.Close()
 
 	err = json.NewDecoder(response.Body).Decode(&userProfile)
@@ -165,6 +163,7 @@ func UserThreads(username, userId string) (UserThreadsData, error) {
 	if err != nil {
 		return userThreads, err
 	}
+
 	defer response.Body.Close()
 
 	err = json.NewDecoder(response.Body).Decode(&userThreads)
