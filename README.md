@@ -25,3 +25,8 @@ func main() {
 	fmt.Println(threads.Data.MediaData.Threads[0].ThreadItems[0].Post.User.Username) // zuck
 }
 ```
+
+## Unit Tests
+<a href="https://github.com/erkanzsy/threads-api/actions">
+<img src="https://img.shields.io/github/actions/workflow/status/erkanzsy/threads-api/go.yml?branch=main&label=%F0%9F%A7%AA%20&style=flat&color=75C46B">
+  </a>
