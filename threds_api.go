@@ -148,7 +148,7 @@ func UserThreads(username, userId string) (UserThreadsData, error) {
 
 	userThreads := UserThreadsData{}
 
-	request, err := http.NewRequest("POST", "https://www.threads.net/api/graphql", bytes.NewBufferString(data.Encode()))
+	request, err := http.NewRequest("POST", GRAPHQL, bytes.NewBufferString(data.Encode()))
 	if err != nil {
 		return userThreads, err
 	}
@@ -182,7 +182,7 @@ func getDefaultHeaders(username string) http.Header {
 	headers.Set("cache-control", "no-cache")
 	headers.Set("origin", "https://www.threads.net")
 	headers.Set("pragma", "no-cache")
-	headers.Set("referer", "https://www.threads.net/@"+username)
+	headers.Set("referer", fmt.Sprintf("%s/@%s", URL, username))
 	headers.Set("sec-ch-prefers-color-scheme", "dark")
 	headers.Set("sec-ch-ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
 	headers.Set("sec-ch-ua-full-version-list", "\"Not.A/Brand\";v=\"8.0.0.0\", \"Chromium\";v=\"114.0.5735.198\", \"Google Chrome\";v=\"114.0.5735.198\"")
